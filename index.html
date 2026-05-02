@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna Dock Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--dark:#0A3323;--moss:#839958;--beige:#F7F4D5;--rose:#D3968C;--midnight:#105666}
+body{margin:0;font-family:'Inter',sans-serif;background:var(--beige)}
+header{position:fixed;top:0;width:100%;background:rgba(247,244,213,0.95);display:flex;align-items:center;justify-content:space-between;padding:10px;z-index:1000}
+.logo{font-family:'Playfair Display'}
+.search{padding:6px;border-radius:8px;border:none;width:120px}
+.hamburger{font-size:22px;cursor:pointer}
+.sidebar{position:fixed;left:-250px;top:0;width:250px;height:100%;background:var(--dark);color:#fff;padding:20px;transition:.3s}
+.sidebar a{display:block;color:#fff;margin:10px 0;text-decoration:none}
+.sidebar.active{left:0}
+.hero{height:50vh;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover;display:flex;align-items:center;justify-content:center;color:#fff}
+.container{padding:80px 15px}
+.section{margin-bottom:40px}
+.card{background:#fff;border-radius:14px;padding:12px;margin-bottom:12px}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.product{background:#fff;border-radius:12px;padding:10px;text-align:center}
+.product img{width:100%;border-radius:10px}
+.filters{display:flex;gap:6px;margin-bottom:10px}
+button{border:none;padding:6px 10px;border-radius:8px;background:var(--moss);color:#fff}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<header>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+<div class="logo">🌙 Luna Dock</div>
+<input class="search" id="search" placeholder="Search..." oninput="runSearch()">
+</header>
+
+<div class="sidebar" id="sidebar">
+<a href="#hair">Hair</a>
+<a href="#skin">Skin</a>
+<a href="#diet">Diet</a>
+</div>
+
+<div class="hero"><h1>Calm. Track. Glow.</h1></div>
+
+<div class="container">
+
+<!-- HAIR -->
+<div id="hair" class="section">
+<h2>Hair</h2>
+<div class="filters">
+<button onclick="filter('all')">All</button>
+<button onclick="filter('luxury')">Luxury</button>
+<button onclick="filter('budget')">Budget</button>
+<button onclick="filter('pharma')">Pharma</button>
+</div>
+<div class="products" id="productList">
+<div class="product luxury">
+<img src="https://via.placeholder.com/150">
+<p>Kérastase Serum</p>
+<a href="https://www.nykaa.com" target="_blank">Buy</a>
+</div>
+<div class="product budget">
+<img src="https://via.placeholder.com/150">
+<p>Minimalist Serum</p>
+<a href="https://beminimalist.co" target="_blank">Buy</a>
+</div>
+<div class="product pharma">
+<img src="https://via.placeholder.com/150">
+<p>Ketoconazole Shampoo</p>
+<a href="https://www.amazon.in" target="_blank">Buy</a>
+</div>
+</div>
+</div>
+
+<!-- DIET -->
+<div id="diet" class="section">
+<h2>Recipes</h2>
+<iframe width="100%" height="200" src="https://www.youtube.com/embed/U3Ov2fHfC6k"></iframe>
+</div>
+
+<!-- INSIGHTS -->
+<div class="card">
+<h2>AI Insights</h2>
+<p id="insight"></p>
+</div>
+
+</div>
+
+<script>
+function toggleMenu(){document.getElementById('sidebar').classList.toggle('active');}
+
+// FILTER
+function filter(type){
+ document.querySelectorAll('.product').forEach(p=>{
+  p.style.display=(type==='all'||p.classList.contains(type))?'block':'none';
+ });
+}
+
+// SEARCH
+function runSearch(){
+ let q=document.getElementById('search').value.toLowerCase();
+ document.querySelectorAll('.product').forEach(p=>{
+  p.style.display=p.innerText.toLowerCase().includes(q)?'block':'none';
+ });
+}
+
+// AI INSIGHTS
+function generateInsights(){
+ let hair=JSON.parse(localStorage.getItem('hairData'))||[];
+ let sleep=JSON.parse(localStorage.getItem('sleepData'))||[];
+ let cycles=JSON.parse(localStorage.getItem('cycles'))||[];
+
+ let text='Collect more data';
+ if(hair.length>3){
+  let high=hair.filter(x=>x>7).length;
+  if(high>1) text='Frequent hair fall spikes detected.';
+ }
+ if(sleep.length && hair.length){
+  let badSleep=sleep.some(s=>s<5);
+  if(badSleep) text+=' Hair fall may be linked to poor sleep.';
+ }
+ if(cycles.length && hair.length){
+  text+=' Possible link with cycle phase.';
+ }
+ document.getElementById('insight').innerText=text;
+}
+
+generateInsights();
+</script>
+
+</body>
+</html>
