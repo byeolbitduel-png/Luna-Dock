@@ -19,6 +19,22 @@ header{position:fixed;top:0;width:100%;background:rgba(247,244,213,0.95);display
 .hero{height:50vh;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover;display:flex;align-items:center;justify-content:center;color:#fff}
 .container{padding:80px 15px}
 .section{margin-bottom:40px}
+ .section {
+  padding-top: 80px;
+  scroll-margin-top: 80px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+header {
+  z-index: 1000;
+}
+
+.sidebar {
+  z-index: 1100;
+}
 .card{background:#fff;border-radius:14px;padding:12px;margin-bottom:12px}
 .products{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .product{background:#fff;border-radius:12px;padding:10px;text-align:center}
@@ -57,7 +73,7 @@ button{border:none;padding:6px 10px;border-radius:8px;background:var(--moss);col
 </div>
 <div class="products" id="productList">
 <div class="product luxury">
-<img src="https://via.placeholder.com/150">
+<img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400">
 <p>Kérastase Serum</p>
 <a href="https://www.nykaa.com" target="_blank">Buy</a>
 </div>
@@ -77,7 +93,13 @@ button{border:none;padding:6px 10px;border-radius:8px;background:var(--moss);col
 <!-- DIET -->
 <div id="diet" class="section">
 <h2>Recipes</h2>
-<iframe width="100%" height="200" src="https://www.youtube.com/embed/U3Ov2fHfC6k"></iframe>
+<iframe width="100%" height="200"
+src="https://www.youtube.com/embed/U3Ov2fHfC6k"
+title="YouTube video"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>
 </div>
 
 <!-- INSIGHTS -->
@@ -128,6 +150,11 @@ function generateInsights(){
 }
 
 generateInsights();
+ document.querySelectorAll('.sidebar a').forEach(link => {
+  link.onclick = () => {
+    document.getElementById('sidebar').classList.remove('active');
+  }
+});
 </script>
 
 </body>
