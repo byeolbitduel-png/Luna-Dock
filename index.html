@@ -4,56 +4,182 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna Dock</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
 --dark:#0A3323;
 --moss:#839958;
 --beige:#F7F4D5;
 --rose:#D3968C;
---midnight:#105666;
+--soft:#ffffffcc;
 }
+
 *{box-sizing:border-box}
-body{margin:0;font-family:'Inter',sans-serif;background:var(--beige);color:#1e1e1e}
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:linear-gradient(180deg,#F7F4D5,#f0edd2);
+color:#1e1e1e;
+}
 
 header{
-position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(247,244,213,0.95);backdrop-filter:blur(10px);z-index:1000}
+position:fixed;
+top:0;width:100%;
+display:flex;justify-content:space-between;align-items:center;
+padding:14px 18px;
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(0,0,0,0.05);
+z-index:1000;
+}
 
-.logo{font-family:'Playfair Display';font-size:20px}
-.search{padding:8px;border-radius:10px;border:none;width:130px}
+.logo{
+font-family:'Playfair Display';
+font-size:20px;
+letter-spacing:0.5px;
+}
+
+.search{
+padding:8px 10px;
+border-radius:12px;
+border:none;
+background:#ffffffaa;
+}
+
 .hamburger{font-size:22px;cursor:pointer}
 
 .sidebar{
-position:fixed;left:-260px;top:0;width:240px;height:100%;background:var(--dark);padding:20px;transition:0.3s;z-index:1100}
-.sidebar a{display:block;color:white;margin:15px 0;text-decoration:none}
+position:fixed;
+left:-260px;
+top:0;
+width:240px;
+height:100%;
+background:var(--dark);
+padding:30px 20px;
+transition:0.3s;
+z-index:1100;
+}
+
+.sidebar a{
+display:block;
+color:white;
+margin:18px 0;
+text-decoration:none;
+font-size:15px;
+opacity:0.9;
+}
+
 .sidebar.active{left:0}
 
 .overlay{
-position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.3);display:none;z-index:1000}
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.3);
+display:none;
+z-index:1000;
+}
+
 .overlay.active{display:block}
 
-.hero{height:60vh;background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200') center/cover;display:flex;align-items:center;justify-content:center;color:white;text-align:center;padding:20px;margin-top:60px}
-.hero h1{font-family:'Playfair Display';font-size:34px}
+.hero{
+height:65vh;
+background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400') center/cover;
+display:flex;align-items:center;justify-content:center;
+text-align:center;
+color:white;
+padding:20px;
+margin-top:70px;
+}
+
+.hero h1{
+font-family:'Playfair Display';
+font-size:38px;
+line-height:1.3;
+}
 
 .container{padding:20px}
-.section{margin-bottom:50px}
+.section{margin-bottom:60px}
 
-.card{background:white;border-radius:18px;padding:14px;margin-bottom:16px;box-shadow:0 10px 20px rgba(0,0,0,0.05)}
+.section h2{
+font-family:'Playfair Display';
+margin-bottom:10px;
+}
 
-.products{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.product{background:white;border-radius:16px;overflow:hidden;box-shadow:0 6px 12px rgba(0,0,0,0.06)}
-.product img{width:100%;height:120px;object-fit:cover}
-.product p{margin:10px;font-size:14px}
-.product a{display:block;margin:10px;background:var(--moss);color:white;padding:8px;border-radius:8px;text-decoration:none;text-align:center}
+.card{
+background:var(--soft);
+backdrop-filter:blur(10px);
+border-radius:20px;
+padding:16px;
+margin-bottom:18px;
+box-shadow:0 8px 25px rgba(0,0,0,0.05);
+}
 
-.filters{display:flex;gap:8px;margin-bottom:10px}
-button{border:none;padding:6px 10px;border-radius:8px;background:var(--moss);color:white;cursor:pointer}
+.products{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
 
-iframe{border-radius:14px;margin-top:10px}
+.product{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 20px rgba(0,0,0,0.06);
+transition:0.3s;
+}
+
+.product:hover{
+transform:translateY(-4px);
+}
+
+.product img{
+width:100%;
+height:130px;
+object-fit:cover;
+}
+
+.product p{
+margin:12px;
+font-size:14px;
+}
+
+.product a{
+display:block;
+margin:12px;
+background:linear-gradient(135deg,#839958,#0A3323);
+color:white;
+padding:8px;
+border-radius:10px;
+text-decoration:none;
+text-align:center;
+font-size:13px;
+}
+
+.filters{
+display:flex;
+gap:8px;
+margin-bottom:12px;
+}
+
+button{
+border:none;
+padding:6px 12px;
+border-radius:12px;
+background:#ffffffaa;
+backdrop-filter:blur(6px);
+cursor:pointer;
+}
+
+iframe{
+border-radius:16px;
+margin-top:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
 
 @media (min-width:768px){
 .products{grid-template-columns:repeat(3,1fr)}
-.hero h1{font-size:42px}
+.hero h1{font-size:48px}
 }
 </style>
 </head>
@@ -69,19 +195,17 @@ iframe{border-radius:14px;margin-top:10px}
 
 <div class="sidebar" id="sidebar">
 <a href="#hair" onclick="closeMenu()">Hair</a>
-<a href="#skin" onclick="closeMenu()">Skin</a>
-<a href="#body" onclick="closeMenu()">Body</a>
 <a href="#diet" onclick="closeMenu()">Diet</a>
 </div>
 
 <div class="hero">
-<h1>Calm routines. Real results.</h1>
+<h1>Aligned with your rhythm</h1>
 </div>
 
 <div class="container">
 
 <div id="hair" class="section">
-<h2>Hair Routine</h2>
+<h2>Hair Ritual</h2>
 <div class="filters">
 <button onclick="filter('all')">All</button>
 <button onclick="filter('luxury')">Luxury</button>
@@ -92,38 +216,25 @@ iframe{border-radius:14px;margin-top:10px}
 <div class="product luxury">
 <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400">
 <p>Kérastase Serum</p>
-<a href="https://www.nykaa.com" target="_blank">Buy</a>
+<a href="https://www.nykaa.com" target="_blank">Explore</a>
 </div>
 <div class="product budget">
 <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400">
 <p>Minimalist Serum</p>
-<a href="https://beminimalist.co" target="_blank">Buy</a>
+<a href="https://beminimalist.co" target="_blank">Explore</a>
 </div>
 <div class="product pharma">
 <img src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400">
 <p>Ketoconazole Shampoo</p>
-<a href="https://www.amazon.in" target="_blank">Buy</a>
+<a href="https://www.amazon.in" target="_blank">Explore</a>
 </div>
 </div>
 </div>
 
 <div id="diet" class="section">
-<h2>PCOS Recipes</h2>
-<iframe width="100%" height="220" 
-src="https://www.youtube.com/embed/U3Ov2fHfC6k"
-title="YouTube video"
-frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen>
-</iframe>
-
-<iframe width="100%" height="220" 
-src="https://www.youtube.com/embed/QxK2v2w8l7k"
-title="YouTube video"
-frameborder="0"
-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen>
-</iframe>
+<h2>PCOS Nourishment</h2>
+<iframe width="100%" height="220" src="https://www.youtube.com/embed/U3Ov2fHfC6k" allowfullscreen></iframe>
+<iframe width="100%" height="220" src="https://www.youtube.com/embed/QxK2v2w8l7k" allowfullscreen></iframe>
 </div>
 
 </div>
