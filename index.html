@@ -4,36 +4,219 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luna Dock</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
---dark:#0A3323;
---moss:#839958;
---beige:#F7F4D5;
---rose:#D3968C;
---soft:#ffffffcc;
+--bg:#f6f3e8;
+--glass:rgba(255,255,255,0.5);
+--text:#1f1f1f;
+--accent:#6f8f6b;
 }
-
 *{box-sizing:border-box}
-body{
-margin:0;
-font-family:'Inter',sans-serif;
-background:linear-gradient(180deg,#F7F4D5,#f0edd2);
-color:#1e1e1e;
+body{margin:0;font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+
+/* PARALLAX */
+.section{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.parallax{background-attachment:fixed;background-size:cover;background-position:center}
+.hero{background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600');color:white;text-align:center}
+.overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4)}
+.content{position:relative;z-index:2;max-width:900px;width:100%}
+
+h1,h2{font-family:'Playfair Display'}
+.tagline{opacity:0.85;margin-bottom:20px}
+
+/* GLASS */
+.card{background:var(--glass);backdrop-filter:blur(18px);border-radius:20px;padding:20px;margin-top:20px}
+
+/* NAV */
+header{position:fixed;top:0;width:100%;padding:15px 20px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.4);backdrop-filter:blur(10px);z-index:1000}
+.logo{font-family:'Playfair Display'}
+.hamburger{cursor:pointer;font-size:22px}
+
+.sidebar{position:fixed;left:-260px;top:0;width:240px;height:100%;background:#111;padding:25px;transition:0.3s;z-index:1100}
+.sidebar a{display:block;color:white;margin:18px 0;text-decoration:none}
+.sidebar.active{left:0}
+
+.overlay-menu{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.3);display:none;z-index:1000}
+.overlay-menu.active{display:block}
+
+button{padding:10px;border:none;border-radius:10px;background:var(--accent);color:white;margin-top:10px;width:100%}
+input,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none}
+
+.products{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.product{background:white;border-radius:14px;padding:10px}
+.product img{width:100%;border-radius:10px}
+
+.quote{font-style:italic;text-align:center;opacity:0.8}
+
+/* THEME TRANSITION */
+body, .card, .product, header {
+ transition: background 0.6s ease, color 0.6s ease, backdrop-filter 0.6s ease;
 }
 
-header{
-position:fixed;
-top:0;width:100%;
-display:flex;justify-content:space-between;align-items:center;
-padding:14px 18px;
-background:rgba(255,255,255,0.6);
-backdrop-filter:blur(14px);
-border-bottom:1px solid rgba(0,0,0,0.05);
-z-index:1000;
+.fade-out {
+ opacity: 0;
+ transition: opacity 0.4s ease;
 }
 
-.logo{
+.fade-in {
+ opacity: 1;
+ transition: opacity 0.6s ease;
+}
+
+.theme-toggle {
+ position:fixed;
+ bottom:20px;
+ right:20px;
+ background:var(--accent);
+ color:white;
+ border:none;
+ padding:10px 14px;
+ border-radius:20px;
+ cursor:pointer;
+ z-index:1200;
+}
+
+.theme-pink{
+ --bg:#fdf0f5;
+ --accent:#d3968c;
+}
+
+.theme-sage{
+ --bg:#eef3ec;
+ --accent:#7a9a7e;
+}
+
+.theme-beige{
+ --bg:#f6f3e8;
+ --accent:#6f8f6b;
+}
+
+</style>
+</head>
+<body>
+
+<div class="overlay-menu" id="overlay" onclick="closeMenu()"></div>
+
+<header>
+<div class="hamburger" onclick="toggleMenu()">☰</div>
+<div class="logo">🌙 Luna Dock</div>
+</header>
+
+<div class="sidebar" id="sidebar">
+<a href="#home" onclick="closeMenu()">✧ Ritual Home</a>
+<a href="hair.html">🌙 Lunar Hair Rituals</a>
+<a href="skin.html">✨ Celestial Skin Care</a>
+<a href="body.html">🫧 Silk Body Elixirs</a>
+<a href="diet.html">🌿 Moon Nourishment</a>
+</div>
+
+<!-- HOME ONLY -->
+<div id="home" class="section parallax hero">
+<div class="overlay"></div>
+<div class="content">
+<h1>Move with your rhythm ✧</h1>
+<p class="tagline">Track. Understand. Align.</p>
+
+<div class="card">
+<h2>✧ Ritual Tracking</h2>
+<select id="hairFall"><option>Hair: Low</option><option>Hair: Medium</option><option>Hair: High</option></select>
+<select id="acne"><option>Skin: Clear</option><option>Skin: Mild</option><option>Skin: Severe</option></select>
+<select id="cycle"><option>Cycle: Follicular</option><option>Cycle: Ovulation</option><option>Cycle: Luteal</option><option>Cycle: Period</option></select>
+<button onclick="saveData()">Save Ritual</button>
+</div>
+
+<div class="card">
+<h2>Insights</h2>
+<p id="insights">Track to unlock patterns</p>
+</div>
+
+<div class="card">
+<h2>✧ Daily Reflection</h2>
+<p id="quote" class="quote"></p>
+</div>
+
+<div class="card">
+<h2>Suggested Rituals</h2>
+<div class="products">
+<div class="product">
+<img src="https://m.media-amazon.com/images/I/61+5iT1bQAL._SL1500_.jpg">
+<p>Minimalist Hair Serum</p>
+</div>
+<div class="product">
+<img src="https://m.media-amazon.com/images/I/61f+Zr3W4-L._SL1500_.jpg">
+<p>Azelaic Acid</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+function toggleMenu(){sidebar.classList.toggle('active');overlay.classList.toggle('active')}
+function closeMenu(){sidebar.classList.remove('active');overlay.classList.remove('active')}
+
+function saveData(){
+let data=JSON.parse(localStorage.getItem('tracker')||'[]');
+data.push({hair:hairFall.value,acne:acne.value,cycle:cycle.value});
+localStorage.setItem('tracker',JSON.stringify(data));
+updateInsights();
+}
+
+function updateInsights(){
+let data=JSON.parse(localStorage.getItem('tracker')||'[]');
+if(data.length<3){insights.innerText='Track more to see patterns';return}
+insights.innerText='Your body is showing patterns ✧';
+}
+
+const quotes=[
+"Your body whispers before it screams.",
+"Healing is rhythm, not perfection.",
+"Soft routines create strong results.",
+"Alignment over control.",
+"Consistency is a quiet power."
+];
+
+function setQuote(){
+document.getElementById('quote').innerText=quotes[Math.floor(Math.random()*quotes.length)];
+}
+
+setQuote();
+updateInsights();
+</script>
+
+
+<button class="theme-toggle" onclick="switchTheme()">Theme ✧</button>
+
+<script>
+let themes=['theme-beige','theme-pink','theme-sage'];
+let currentTheme=0;
+
+function switchTheme(){
+ document.body.classList.add('fade-out');
+ setTimeout(()=>{
+  document.body.classList.remove(themes[currentTheme]);
+  currentTheme=(currentTheme+1)%themes.length;
+  document.body.classList.add(themes[currentTheme]);
+  localStorage.setItem('theme',themes[currentTheme]);
+  document.body.classList.remove('fade-out');
+  document.body.classList.add('fade-in');
+ },400);
+}
+
+function loadTheme(){
+ let saved=localStorage.getItem('theme');
+ if(saved){
+  document.body.classList.add(saved);
+ }
+}
+
+loadTheme();
+</script>
+
+</body>
+</html>
 font-family:'Playfair Display';
 font-size:20px;
 letter-spacing:0.5px;
